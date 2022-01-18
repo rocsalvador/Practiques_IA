@@ -1,0 +1,92 @@
+___
+Requisitos:
+Precio máximo de alquiler: 1500 (hard)
+Tiene mascotas (hard)
+Va en silla de ruedas (hard)
+Son 3 en casa (hard)
+tiene coche (soft)
+
+Debe mostrar únicamente:
+  - casa 3
+___
+Requisitos:
+Precio máximo de alquiler 900 (hard)
+Son 7 en casa (hard)
+tiene coche (soft)
+No hace falta ascensor (soft)
+No tiene mascotas (soft)
+
+Debe mostrar en orden de preferencia:
+  1- casa1 (Tiene Garaje)
+  2- casa0 (No tiene Garaje)
+
+___
+Requisitos:
+Precio máximo del alquiler 1100 (hard)
+Son 2 en casa (hard)
+Tiene un trabajo en (soft)
+(LongitudY -2.223)
+(longitudX -11.4)
+No tiene coche (hard)
+Tiene Mascotas (hard)
+Superficie de vivienda 90 (hard)
+No hace falta ascensor (hard)
+
+Debe mostrar en orden de preferencia:
+  1- casa2 (Trabajo más cercano)
+  2- casa4 (Trabajo menos cercano)
+  ...
+
+___
+
+Requisitos:
+Son 2 personas (hard)
+Precio max alquiler 1700 (hard)
+Superficie min 200 (hard)
+No hay necesidad de accesibilidad en silla de ruedas
+amueblada (hard)
+con aire_acondicionado (hard)
+con buenas vistas (hard)
+con electrodomesticos (hard)
+altura "ultimo piso" (hard)
+tiene mascotas (hard)
+Quiere ascensor (hard)
+Juega a basquet (hard)
+
+Debe mostrar :
+  1- casa6
+
+___
+
+
+Requisitos:
+Son 2 personas (hard)
+Precio max alquiler 1000 (hard)
+superficie vivienda 300 (hard)
+Cerca del trabajo: (soft)
+latitudY : 9.23
+longitudX : -1.3
+Necesidad de silla de ruedas (hard)
+Necesidad de amueblada (hard)
+con silla de ruedas (hard)
+con buenas vistas (hard)
+altura: "piso intermedio" (hard)
+con mascotas (hard)
+sin ascensor (hard)
+
+Debe mostrar preferentemente:
+  1. casa8
+  2. casa7
+
+___
+
+Requisitos:
+
+Precio max alquiler 5000 (hard)
+Sin necesidad de silla de ruedas (soft)
+Sin mascota (soft)
+Sin coche (soft)
+
+Debe mostrar preferentemente:
+  - casa 10
+  - casa 9
