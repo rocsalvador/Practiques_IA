@@ -1,0 +1,121 @@
+-ESTAT-----------------------------------------------------------------------------------------------------------
+global (static):
+ - Posicions centres distribució
+ - Posicions gasolineres
+ 
+ - Camió:
+	- Trajecte
+
+ - Peticions servides:
+	- Gasolinera
+	- Dies que porta
+
+ - Peticions no servides:
+	- Gasolinera
+	- Dies que porta
+
+
+-PREGUNTES--------------------------------------------------------------------------------------------------------
+Els camions poden anar a qualsevol CD o només al seu original? No, només al seu CD.
+Treure (o afegir) el destí a qualsevol posició del trajecte seria viable? No cal, de moment només operador afegir.
+
+
+-OPERADORS--------------------------------------------------------------------------------------------------------
+- afegir destí a trajecte (camió, posició) - O(Npos * Ncamions)
+	Condició aplicabilitat: posició representa gasolinera o CD
+							el camió ha de poder fer aquests kM
+							si darrera posició és CD el camió pot fer aquest viatge
+							si posició és gasolinera el camió té dipòsit i hi ha una comanda
+
+- treure últim destí a trajecte (camió) - O(Ncamions)
+	Condició aplicabilitat: camió té algun destí al seu trajecte
+
+- intercanviar destins d'un trajecte (camió, destí1, destí2) - O(Ncamions * Ndestins)
+	Condició aplicabilitat: el camió té els dos destins
+
+- swap destins entre dos camions (camió1, destí1, camió2, destí2) - O(Ncamions*Ncamions * Ndestins * Ndestins)
+	Condició aplicabilitat: els camions poden fer aquest nou destí:
+								pot fer aquests kM
+								si el nou destí és CD el camió pot fer aquest viatge
+								si posició és gasolinera el camió té dipòsit
+
+
+-GENERACIÓ ESTAT INICIAL--------------------------------------------------------------------------------------------------
+estat inicial ràpid dolent:
+    Cap comanda atesa, els camions tenen trajectes buits
+
+estat inicial lent òptim:
+    Totes les comandes ateses, les gasolineres amb més dies sense atendre són les primeres a ser abastides pels camions
+    més propers que tenen
+
+Implementació: Fins que hi hagi comandes, es fa un BFS per a cada gasolinera en ordre decreixent de dies sense atendre,
+                    per buscar el camió més proper per a que l'abasteixi. Cada dues iteracions es fa un BFS des dels camions
+                    per a buscar el centre de distribució més proper que tenen, tots els camions es mouen a cada torn fins
+                    que es queden sense kM (o sense viatges).
+
+
+-CRITERI PER A QUE UN ESTAT SIGUI SOLUCIÓ------------------------------------------------------------------------------------------------------
+Totes les peticions han estat ateses o bé no hi ha peticions vàlides (en els dos casos arribes a fulles)
+
+
+-POSSIBLES HEURÍSTICS------------------------------------------------------------------------------------
+- Beneficis nets: Suma de preus peticions servides - km camions recorreguts * cost
+- Quocient beneficis: Suma de preus servides / Suma de preus totes les peticions
+- Beneficis nets amb dipòsit: Beneficis nets + Benefici emplenar petició / 2 * min(Ndiposits, Npeticionspendents)
+
+- Canviar Cjt_Peticions per tenir un vector com a paràmetre implícit. (Permet implementar Operador swap)
+- Fer l'operador swap com a prioritari.
+- Sobre distàncies precalculades (nova classe):
+    - Cercar un tipus de dades eficient per evitar desar distàncies redundants.
+    - Implementar funció de càlcul de les distàncies.
+
+-EXPERIMENTS------------------------------------------------------------
+1-	Objectiu: Triar els millors operadors 
+	Mapa: 10 CDs i 100 gasolineres
+	Algorisme: Hill Climbing
+	Generador estat inicial: A triar entre les que tenim
+	Heurística: Triar la que optimitzi el criteri de qualitat de la solució
+
+2- 	Objectiu: Triar la millor solució inicial
+	Mapa: = experiment 1
+	Algorisme: Hill Climbing
+	Heurística: = experiment 1
+	Operadors: = experiment 1
+
+3-	Objectiu: Determinar els paràmetres que donen el millor resultat per Simulated Annealing
+	Mapa: = experiment 1
+	Algorisme: Simulated Annealing
+	Heurística: = experiment 1
+	Operadors: = experiment 1
+	Solució inicial: = experiment 2
+
+4-	Objectius: 
+		- Estudiar l'evolució del temps d'execució quan augmentem la mida del problema amb els diferents algorismes
+		- Estudiar si els paràmetres de Simulated Annealing de l'apartat anterior continuen funcionant
+	Mapa: = (10 CDs i 100 gasolineres), (20 CDs i 200 gasolineres), (30 CDs i 300 gasolineres)...
+	Algorisme: Simulated Annealing i Hill Climbing
+	Heurística: = experiment 1
+	Operadors: = experiment 1
+	Solució inicial: = experiment 2
+
+5-	Objectiu: Efecte en els beneficis i els km recorreguts
+	Mapa: 5 CD (2 camions/CD) i 100 gasolineres
+	Algorisme: Hill Climbing
+
+6-	Objectiu: Efecte en el número de peticions servides
+	Mapa: 10 CDs i 100 gasolineres
+	Condicions: 2 cost/km, 4 cost/km, 8 cost/km...
+	Algorisme: Hill Climbing
+
+7-	Objectiu: Efecte en el benefici
+	Mapa: 10 CDs i 100 gasolineres
+	Condicions: hores de feina = 8h, hores de feina = 9h, hores de feina = 7h...
+	Algorisme: Hill Climbing
+
+8- (Especial)
+	Objectiu: Resultat del benefici
+	Mapa: 10 CDs i 100 gasolineres (seed = 1234)
+	Operadors: = experiment 1
+	Solució inicial: = experiment 2
+	Heurística: = experiment 1
+	Algorisme: ?
